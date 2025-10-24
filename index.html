@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>気温記録</title>
+<style>
+body{margin:0;padding:20px;background:#1a1a2e;color:#eee;font-family:sans-serif}
+input,button{padding:10px;margin:5px;border:none;border-radius:5px;font-size:16px}
+input{background:#16213e;color:#fff;width:80px}
+button{background:#0f3460;color:#fff;cursor:pointer}
+button:hover{background:#e94560}
+#list{margin-top:20px}
+.item{background:#16213e;padding:10px;margin:5px 0;border-radius:5px;display:flex;justify-content:space-between}
+</style>
+</head>
+<body>
+<h2>🌡️ 気温記録</h2>
+<input id="t" type="number" placeholder="気温 (℃)">
+<button onclick="add()">記録</button>
+<div id="list"></div>
+<script>
+let d=[];
+function add(){
+let v=document.getElementById('t').value;
+if(v){
+d.push({time:new Date().toLocaleString('ja-JP'),temp:v});
+show();
+document.getElementById('t').value='';
+}
+}
+function show(){
+let h='';
+d.slice().reverse().forEach((e,i)=>{
+h+=`<div class="item"><span>${e.time} - ${e.temp}℃</span><button onclick="del(${d.length-1-i})">削除</button></div>`;
+});
+document.getElementById('list').innerHTML=h;
+}
+function del(i){
+d.splice(i,1);
+show();
+}
+</script>
+</body>
+</html>
